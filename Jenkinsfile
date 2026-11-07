@@ -1,19 +1,19 @@
-pipeline{
+pipeline {
     agent {
-    label 'ubuntu-agent'
+        label 'ubuntu-agent'
     }
 
     parameters {
         string(
             name: 'USER_NAME',
-            defaultvalue: 'Matan',
+            defaultValue: 'Matan',
             trim: true,
             description: 'Enter your name'
         )
 
         booleanParam(
             name: 'RUN_TEST',
-            defaultvalue: true,
+            defaultValue: true,
             description: 'Run tests?'
         )
 
@@ -22,14 +22,15 @@ pipeline{
             choices: ['development', 'staging', 'production'],
             description: 'Choose environment'
         )
-
-
-
-
     }
 
-
-
-
-
+    stages {
+        stage('Verify Agent') {
+            steps {
+                sh 'hostname'
+                echo "Hello ${params.USER_NAME}"
+                echo "Environment: ${params.ENVIRONMENT}"
+            }
+        }
+    }
 }
